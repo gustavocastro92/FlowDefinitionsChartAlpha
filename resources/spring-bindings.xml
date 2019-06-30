@@ -1,0 +1,58 @@
+<jxb:bindings xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    version="1.0">
+
+    <jxb:bindings schemaLocation="spring-beans.xsd" node="/xs:schema">
+
+<!-- Resolve:
+[ERROR] Property "Ref" is already defined. Use &lt;jaxb:property> to resolve this conflict.
+  line 975 of file:/home/dw/sandbox/BRZtests/src/jaxb/spring25.xsd
+
+[ERROR] Property "Value" is already defined. Use &lt;jaxb:property> to resolve this conflict.
+  line 977 of file:/home/dw/sandbox/BRZtests/src/jaxb/spring25.xsd
+  -->
+        <jxb:bindings node="//xs:complexType[@name='propertyType']">
+            <jxb:bindings node=".//xs:attribute[@name='ref']">
+                <jxb:property name="refAttribute"/>
+            </jxb:bindings>
+            <jxb:bindings node=".//xs:attribute[@name='value']">
+                <jxb:property name="valueAttribute"/>
+            </jxb:bindings>
+        </jxb:bindings>
+<!--
+[ERROR] Property "Ref" is already defined. Use &lt;jaxb:property> to resolve this conflict.
+  line 577 of file:/home/dw/sandbox/BRZtests/src/jaxb/spring25.xsd
+
+[ERROR] The following location is relevant to the above error
+  line 606 of file:/home/dw/sandbox/BRZtests/src/jaxb/spring25.xsd
+
+[ERROR] Property "Value" is already defined. Use &lt;jaxb:property> to resolve this conflict.
+  line 579 of file:/home/dw/sandbox/BRZtests/src/jaxb/spring25.xsd
+
+[ERROR] The following location is relevant to the above error
+  line 613 of file:/home/dw/sandbox/BRZtests/src/jaxb/spring25.xsd
+
+-->
+        <jxb:bindings node="//xs:element[@name='constructor-arg']">
+            <jxb:bindings node=".//xs:attribute[@name='ref']">
+                <jxb:property name="refAttribute"/>
+            </jxb:bindings>
+            <jxb:bindings node=".//xs:attribute[@name='value']">
+                <jxb:property name="valueAttribute"/>
+            </jxb:bindings>
+        </jxb:bindings>
+
+<!--
+[ERROR] Property "Key" is already defined. Use &lt;jaxb:property> to resolve this conflict.
+  line 1063 of file:/home/dw/sandbox/BRZtests/src/jaxb/spring25.xsd
+
+[ERROR] The following location is relevant to the above error
+  line 1066 of file:/home/dw/sandbox/BRZtests/src/jaxb/spring25.xsd
+-->
+        <jxb:bindings node="//xs:complexType[@name='entryType']">
+            <jxb:bindings node=".//xs:attribute[@name='key']">
+                <jxb:property name="keyAttribute"/>
+            </jxb:bindings>
+        </jxb:bindings>
+    </jxb:bindings>
+</jxb:bindings>
