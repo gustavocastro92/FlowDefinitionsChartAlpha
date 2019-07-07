@@ -49,7 +49,7 @@ import javax.xml.bind.annotation.XmlType;
     "description",
     "beanOrRefOrIdref"
 })
-public class EntryType {
+public class Entry {
 
     protected Key key;
     protected Description description;

@@ -53,7 +53,7 @@ public class MapType
 {
 
     protected Description description;
-    protected List<EntryType> entry;
+    protected List<Entry> entry;
     @XmlAttribute(name = "key-type")
     protected String keyType;
 
@@ -99,13 +99,13 @@ public class MapType
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link EntryType }
+     * {@link Entry }
      * 
      * 
      */
-    public List<EntryType> getEntry() {
+    public List<Entry> getEntry() {
         if (entry == null) {
-            entry = new ArrayList<EntryType>();
+            entry = new ArrayList<Entry>();
         }
         return this.entry;
     }

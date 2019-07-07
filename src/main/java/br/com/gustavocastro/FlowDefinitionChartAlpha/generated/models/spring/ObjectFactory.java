@@ -188,11 +188,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link EntryType }
+     * Create an instance of {@link Entry }
      * 
      */
-    public EntryType createEntryType() {
-        return new EntryType();
+    public Entry createEntryType() {
+        return new Entry();
     }
 
     /**
@@ -281,16 +281,16 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EntryType }{@code >}
+     * Create an instance of {@link JAXBElement }{@code <}{@link Entry }{@code >}
      * 
      * @param value
      *     Java instance representing xml element's value.
      * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link EntryType }{@code >}
+     *     the new instance of {@link JAXBElement }{@code <}{@link Entry }{@code >}
      */
     @XmlElementDecl(namespace = "http://www.springframework.org/schema/beans", name = "entry")
-    public JAXBElement<EntryType> createEntry(EntryType value) {
-        return new JAXBElement<EntryType>(_Entry_QNAME, EntryType.class, null, value);
+    public JAXBElement<Entry> createEntry(Entry value) {
+        return new JAXBElement<Entry>(_Entry_QNAME, Entry.class, null, value);
     }
 
     /**

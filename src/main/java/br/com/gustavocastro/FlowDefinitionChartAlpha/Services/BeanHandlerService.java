@@ -21,7 +21,7 @@ public class BeanHandlerService {
 	private java.util.List<Bean> beanList;
 	private mxGraphModel mx;
 	private mxGraph mg;
-	private int x = 200, y;
+	private int x = 250, y;
 	private Object parent;
 	Object lastMv;
 
@@ -65,13 +65,25 @@ public class BeanHandlerService {
 		for (Object o : l.getBeanOrRefOrIdref()) {
 			if (o instanceof Bean) {
 				Bean b = (Bean) o;
-				if (b.getClazz().equals(Router.class.toString())) {
-//					TODO: terminar implementacao
-					List listRef = getConstructorArgsList(b);
+				if (b.getClazz().equals(Router.class.getName())) {
+					
+					Object rhombus = addMxConditionShape(b, flow);
+					addEdge(rhombus, this.lastMv);
+					this.lastMv = rhombus;
+					
+					java.util.List<Object> constructors = b.getMetaOrConstructorArgOrProperty();
+					ConstructorArg router = (ConstructorArg) constructors.get(0);
+					ConstructorArg routes = (ConstructorArg) constructors.get(1);
+					
+					Map routesMap = routes.getMap();
+					
 					int i = flow;
-					for (Object o2 : listRef.getBeanOrRefOrIdref()) {
-						Bean b2 = (Bean) o2;
-						printBeans(b2, i);
+					int yTemp = this.y;
+					Object tempLastMv = this.lastMv;
+					for (Entry e : routesMap.getEntry()) {
+						this.y = yTemp;
+						this.lastMv = tempLastMv;
+						printBeans(getRootBeanById(e.getValueRef()), i);
 						i++;
 					}
 				} else {
@@ -97,10 +109,10 @@ public class BeanHandlerService {
 		return this.mg.insertVertex(parent, b.getId(), b.getClazz(), x * flow, y, DEFAULT_NODE_WIDTH, 75);
 	}
 
-	private void addMxConditionShape(Bean b, int flow) {
+	private Object addMxConditionShape(Bean b, int flow) {
 		incrementHeight();
-		this.lastMv = this.mg.insertVertex(parent, b.getId(), b.getId(), calculateCenter(ELIPSE_SIZE) * flow, y, ELIPSE_SIZE,
-				ELIPSE_SIZE, mxConstants.SHAPE_HEXAGON);
+		return this.mg.insertVertex(parent, b.getId(), b.getId(), calculateCenter(ELIPSE_SIZE) * flow, y, ELIPSE_SIZE,
+				ELIPSE_SIZE, mxConstants.SHAPE_RHOMBUS);
 	}
 	
 	private void addMxStartShape(Bean b) {
@@ -108,7 +120,6 @@ public class BeanHandlerService {
 		this.lastMv = this.mg.insertVertex(parent, b.getId(), b.getId(), calculateCenter(ELIPSE_SIZE), y, ELIPSE_SIZE,
 				ELIPSE_SIZE, mxConstants.SHAPE_ELLIPSE);
 	}
-	
 
 	private double calculateCenter(int wd) {
 		return this.x + ((DEFAULT_NODE_WIDTH - 80) / 2);
