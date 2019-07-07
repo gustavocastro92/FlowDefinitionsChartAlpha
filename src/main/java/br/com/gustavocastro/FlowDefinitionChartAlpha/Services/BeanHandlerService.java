@@ -1,5 +1,7 @@
 package br.com.gustavocastro.FlowDefinitionChartAlpha.Services;
 
+import java.util.ArrayList;
+
 import org.codehaus.plexus.util.dag.Vertex;
 import org.w3c.dom.Node;
 
@@ -80,12 +82,18 @@ public class BeanHandlerService {
 					int i = flow;
 					int yTemp = this.y;
 					Object tempLastMv = this.lastMv;
+					java.util.List<Object> mvList = new ArrayList<>();
+					
 					for (Entry e : routesMap.getEntry()) {
 						this.y = yTemp;
 						this.lastMv = tempLastMv;
 						printBeans(getRootBeanById(e.getValueRef()), i);
+						mvList.add(this.lastMv);
 						i++;
 					}
+					
+					this.lastMv = mvList;
+					
 				} else {
 					Object currMv = addMxItemShape(b, flow);
 					addEdge(currMv, this.lastMv);
@@ -125,10 +133,17 @@ public class BeanHandlerService {
 		return this.x + ((DEFAULT_NODE_WIDTH - 80) / 2);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void addEdge(Object ini, Object end) {
-		this.mg.insertEdge(parent, null, "", end, ini);
+		if (end instanceof ArrayList) {
+			for (Object o : (java.util.List<Object>) end) {
+				addEdge(ini, o);
+			}
+		} else {
+			this.mg.insertEdge(parent, null, "", end, ini);
+		}
 	}
-
+	
 	private void incrementHeight() {
 		y += HEIGHT_ADD_VALUE;
 	}
